@@ -1,0 +1,58 @@
+import java.io.*;
+import java.util.*;
+import java.util.Scanner;
+
+/*
+    Name: Daniel Duran
+    Date: 9/9/2024
+    Course: Software Development I CEN-3024C-15339
+
+    Class: Read File
+    Class objective: This class is for allowing users to input the file directory
+                     to a text file that has a book's ID, Author, and Title.
+                     This class will locate the file, open it, assign each variable
+                     to a new Book class object, and then close the file.
+
+ */
+
+public class readfile {
+    private Scanner x;
+    Scanner input = new Scanner(System.in);
+    String dir;
+    File file;
+
+    public void openfile() {
+
+        System.out.println("Please type the directory of the file: ");
+        dir = input.nextLine();
+        file = new File(dir);
+
+        try {
+            x = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+    }
+
+    public void scanfile(ArrayList<Book> bookList) {
+        Book book1 = new Book();
+
+        while (x.hasNext()) {
+            int ID = x.nextInt();
+            x.nextLine();
+            String title = x.nextLine();
+            String author = x.nextLine();
+
+            book1.setID(ID);
+            book1.setTitle(title);
+            book1.setAuthor(author);
+
+            bookList.add(book1);
+            bookList.get(0).toString();
+        }
+    }
+
+    public void closefile(){
+        x.close();
+    }
+}
