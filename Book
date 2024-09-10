@@ -1,0 +1,48 @@
+/*
+    Name: Daniel Duran
+    Date: 9/9/2024
+    Course: Software Development I CEN-3024C-15339
+
+    Class: Book Class
+    Class objective: This class defines a book object to populate the libraries' database.
+                     Each book has its own ID, Title, and Author.
+
+ */
+
+public class Book {
+    private int ID;
+    private String Title;
+    private String Author;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String title) {
+        Title = title;
+    }
+
+    public String getAuthor() {
+        return Author;
+    }
+
+    public void setAuthor(String author) {
+        Author = author;
+    }
+
+    public String toString() {
+        String result;
+        result =  "\nBook ID: " + ID
+                + "\nBook title: " + Title
+                + "\nBook author: " + Author;
+        return result;
+    }
+}
