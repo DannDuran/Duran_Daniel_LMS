@@ -1,0 +1,123 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+
+/*
+    Name: Daniel Duran
+    Date: 9/9/2024
+    Course: Software Development I CEN-3024C-15339
+
+    Class: Main Class
+    Class objective: This program will allow users to access a Library Management System.
+                     From the main menu, users will be able to select whether they would like to
+                     add a new book to the database from a text file, remove a book from the database,
+                     or see a list of all currently held books.
+
+ */
+
+/*
+    Method name: Main
+    Method purpose: This method's purpose is to display the menu for the user to select each option from.
+                    It contains the switch that calls all the other methods.
+    Method arguments: None
+    Method return value: None
+ */
+
+public class Main {
+    public static void main(String[] args) {
+        int choice;
+        boolean error;
+        ArrayList<Book> bookList = new ArrayList<Book>();
+        Scanner a = new Scanner(System.in);
+
+        do {
+            do {
+                System.out.println("\nPlease select the operation you wish to perform:\n");
+                System.out.println("\t1. Add book from text file");
+                System.out.println("\t2. Remove book from database");
+                System.out.println("\t3. List all books");
+                System.out.println("\t4. Exit Program");
+
+                System.out.println("\nEnter Here: ");
+                choice = a.nextInt();
+
+                switch (choice) {
+                    case 1:
+                        error = false;
+                        System.out.println("\n\tADDING NEW BOOK FROM TEXT FILE\n");
+                        readfile r = new readfile();
+                        r.openfile();
+                        r.scanfile(bookList);
+                        r.closefile();
+                        break;
+                    case 2:
+                        error = false;
+                        removeBook(bookList);
+                        break;
+                    case 3:
+                        error = false;
+                        listBooks(bookList);
+                        break;
+                    case 4:
+                        error = false;
+                        System.out.println("\n\tEXITING PROGRAM...\n");
+                        break;
+                    default:
+                        error = true;
+                        System.out.println("\tError: You must pick an option from 1-4!");
+                        System.out.println("\tPlease Try Again.");
+                }
+            } while (error);
+        } while(choice != 4);
+    }
+
+/*
+    Method name: removeBook
+    Method purpose: This method's purpose is to obtain the ID number of the book the user
+                    wants to remove. The method then searches through the book array for
+                    a book with the same ID number. Once the book is found it is
+                    removed from the list.
+    Method arguments: bookList - This is the array list that holds all the book objects
+    Method return value: None
+ */
+    public static void removeBook(ArrayList<Book> bookList) {
+        Scanner input = new Scanner(System.in);
+        int bookID;
+        boolean error = false;
+
+        do {
+            System.out.println("\n\tREMOVING BOOK FROM DATABASE\n");
+            System.out.println("Enter the ID of the book you wish to remove: ");
+            bookID = input.nextInt();
+            input.nextLine();
+
+            for (int i = 0; i < bookList.size(); i++) {
+                if (bookID == bookList.get(i).getID()) {
+                    bookList.remove(i);
+                    System.out.println("Removed book with ID of: " + bookID);
+                    error = false;
+                } else {
+                    error = true;
+                }
+            }
+
+            if (error) {
+                System.out.println("\tError: Book does not exist!");
+                System.out.println("\tPlease Try Again.");
+            }
+        } while(error);
+    }
+
+/*
+    Method name: listBooks
+    Method purpose: This method's purpose is to display all the books currently in the bookList array list.
+    Method arguments: bookList - This is the array list that holds all the book objects
+    Method return value: None
+ */
+    public static void listBooks(ArrayList<Book> bookList){
+        System.out.println("\n\tLISTING ALL BOOKS CURRENTLY IN DATABASE\n");
+
+        for(int i = 0; i < bookList.size(); i++) {
+            System.out.println("\tBook " + (i + 1) + bookList.get(i).toString() + "\n");
+        }
+    }
+}
